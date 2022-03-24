@@ -356,41 +356,7 @@ ymaps.ready(function () {
 		// Получим ссылку на провайдер пробок "Сейчас" и включим показ инфоточек.
 		trafficControl.getProvider('traffic#actual').state.set('infoLayerShown', true); 
 		
-		rt1 = new ymaps.multiRouter.MultiRoute({
-            referencePoints: [
-				home,
-				myPlacemark5
-            ],
-            params: {
-                //Тип маршрутизации - пешеходная маршрутизация.
-                routingMode: 'pedestrian'
-            }
-        }, {
-            // Автоматически устанавливать границы карты так, чтобы маршрут был виден целиком.
-            boundsAutoApply: true
-        });
 		
-		rt2 = new ymaps.multiRouter.MultiRoute({
-            referencePoints: [
-				myPlacemark4,
-				home
-            ],
-            params: {
-                //Тип маршрутизации - пешеходная маршрутизация.
-                routingMode: 'pedestrian'
-            }
-        }, {
-            // Автоматически устанавливать границы карты так, чтобы маршрут был виден целиком.
-            boundsAutoApply: true
-        });
-		
-		// Собираем по линии для каждой нитки маршрута.
-		//const firstAnimatedLine = rt1.getRoutes().toArray()
-		//  .map(route => new ymaps.Polyline(routeToLineString(route)));
-		  
-		// Собираем по линии для каждой нитки маршрута.
-		//const secondAnimatedLine = rt2.getRoutes().toArray()
-		//  .map(route => new ymaps.Polyline(routeToLineString(route)));
 		var firstAnimatedLine = new ymaps.AnimatedLine([
         [55.744074, 49.183684],
 		[55.744306, 49.181825],
@@ -448,7 +414,14 @@ ymaps.ready(function () {
 		
 		// Создаем метки.
     var firstPoint = new ymaps.Placemark([55.744074, 49.183684], {}, {
-        preset: 'islands#redRapidTransitCircleIcon'
+        iconLayout: 'default#image',
+            // Своё изображение иконки метки.
+            iconImageHref: 'home.png',
+            // Размеры метки.
+            iconImageSize: [30, 42],
+            // Смещение левого верхнего угла иконки относительно
+            // её "ножки" (точки привязки).
+            iconImageOffset: [-5, -38]
     });
     var secondPoint = new ymaps.Placemark([55.792043, 49.122108], {}, {
         preset: 'islands#blueMoneyCircleIcon'
@@ -479,7 +452,7 @@ ymaps.ready(function () {
 				// После паузы перезапускаем анимацию.
 				.then(function() {
 					// Удаляем метки с карты.
-					myMap.geoObjects.remove(firstPoint);
+					//myMap.geoObjects.remove(firstPoint);
 					//myMap.geoObjects.remove(secondPoint);
 					//myMap.geoObjects.remove(thirdPoint);
 					// Убираем вторую линию.
@@ -492,7 +465,7 @@ ymaps.ready(function () {
 		playAnimation();
 		
 		// Создадим 5 пунктов выпадающего списка.
-    var listBoxItems = ['Общепит', 'Магазин', 'Стоматология', 'Колесо обозрения', 'Копицентр']
+    var listBoxItems = ['Общепит', 'Магазин', 'Стоматология', 'Колесо обозрения', 'Копицентр', 'Музей']
             .map(function (title) {
                 return new ymaps.control.ListBoxItem({
                     data: {
@@ -550,11 +523,11 @@ ymaps.ready(function () {
     });
 	}
 	
-	myPlacemark.events.once('balloonopen', requestForPanorama);
-	myPlacemark1.events.once('balloonopen', requestForPanorama);
-	myPlacemark2.events.once('balloonopen', requestForPanorama);
-	myPlacemark3.events.once('balloonopen', requestForPanorama);
-	myPlacemark4.events.once('balloonopen', requestForPanorama);
+	myPlacemark.events.once('balloonopen', requestForPanorama2);
+	myPlacemark1.events.once('balloonopen', requestForPanorama2);
+	myPlacemark2.events.once('balloonopen', requestForPanorama2);
+	myPlacemark3.events.once('balloonopen', requestForPanorama2);
+	myPlacemark4.events.once('balloonopen', requestForPanorama2);
 	myPlacemark5.events.once('balloonopen', requestForPanorama);
 
 	myMap.geoObjects.add(myPlacemark);
